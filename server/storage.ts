@@ -298,7 +298,7 @@ export class DbStorage implements IStorage {
 
   // Invoices
   async getInvoices(): Promise<Invoice[]> {
-    return await db.select().from(invoices).orderBy(desc(invoices.generatedAt));
+    return await db.select().from(invoices).orderBy(desc(invoices.invoiceDate));
   }
 
   async getInvoicesByInstitution(institutionId: number): Promise<Invoice[]> {
@@ -306,7 +306,7 @@ export class DbStorage implements IStorage {
       .select()
       .from(invoices)
       .where(eq(invoices.institutionId, institutionId))
-      .orderBy(desc(invoices.generatedAt));
+      .orderBy(desc(invoices.invoiceDate));
   }
 
   async createInvoice(invoice: InsertInvoice): Promise<Invoice> {
@@ -325,7 +325,7 @@ export class DbStorage implements IStorage {
 
   // Payments
   async getPayments(): Promise<Payment[]> {
-    return await db.select().from(payments).orderBy(desc(payments.uploadedAt));
+    return await db.select().from(payments).orderBy(desc(payments.paymentDate));
   }
 
   async getPaymentsByInvoice(invoiceId: number): Promise<Payment[]> {

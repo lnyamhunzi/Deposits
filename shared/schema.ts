@@ -531,8 +531,9 @@ export const invoices = mysqlTable("invoices", {
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
 });
 export type Invoice = typeof invoices.$inferSelect;
+export type InsertInvoice = typeof invoices.$inferInsert;
 
-const payments = mysqlTable("payments", {
+export const payments = mysqlTable("payments", {
   id: varchar("id", { length: 255 }).primaryKey(), // Assuming UUID
   invoiceId: varchar("invoice_id", { length: 255 }).notNull().references(() => invoices.id),
   amount: decimal("amount", { precision: 20, scale: 2 }).notNull(),
@@ -545,6 +546,7 @@ const payments = mysqlTable("payments", {
   updatedAt: timestamp("updated_at").defaultNow().onUpdateNow(),
 });
 export type Payment = typeof payments.$inferSelect;
+export type InsertPayment = typeof payments.$inferInsert;
 
 export const premiumPenalties = mysqlTable("premium_penalties", {
   id: varchar("id", { length: 255 }).primaryKey(), // Assuming UUID
