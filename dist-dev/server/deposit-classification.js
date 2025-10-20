@@ -1,4 +1,5 @@
-class DepositClassificationEngine {
+// server/deposit-classification.ts
+var DepositClassificationEngine = class {
   coverLevel;
   sizeCategories = {
     small: { min: 0, max: 1e3 },
@@ -229,7 +230,7 @@ class DepositClassificationEngine {
       trends
     };
   }
-}
+};
 export {
   DepositClassificationEngine
 };
