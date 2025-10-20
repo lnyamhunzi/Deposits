@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from "./db.js";
 import { CAMELSCalculations } from "./camels-calculations";
 import { DepositClassificationEngine } from "./deposit-classification";
 import { Account, DepositClassificationResult, TrendAnalysisResult } from "@shared/types";
