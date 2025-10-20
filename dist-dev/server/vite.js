@@ -1,10 +1,10 @@
+// server/vite.ts
 import express from "express";
 import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, createLogger } from "vite";
-import viteConfig from "../vite.config.js";
 import { nanoid } from "nanoid";
-const viteLogger = createLogger();
+var viteLogger = createLogger();
 function log(message, source = "express") {
   const formattedTime = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -20,6 +20,8 @@ async function setupVite(app, server) {
     hmr: { server },
     allowedHosts: true
   };
+  const viteConfigModule = await import(new URL("../vite.config.js", import.meta.url).href);
+  const viteConfig = viteConfigModule.default;
   const vite = await createViteServer({
     ...viteConfig,
     configFile: false,

@@ -3,7 +3,6 @@ import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, createLogger } from "vite";
 import { type Server } from "http";
-import viteConfig from "../../vite.config.js";
 import { nanoid } from "nanoid";
 
 const viteLogger = createLogger();
@@ -25,6 +24,10 @@ export async function setupVite(app: Express, server: Server) {
     hmr: { server },
     allowedHosts: true as const,
   };
+
+  // Dynamically import Vite config at runtime so esbuild doesn't try to resolve it at build time
+  const viteConfigModule = await import(new URL("../vite.config.js", import.meta.url).href);
+  const viteConfig = viteConfigModule.default;
 
   const vite = await createViteServer({
     ...viteConfig,
