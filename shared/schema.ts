@@ -532,7 +532,7 @@ export const invoices = mysqlTable("invoices", {
 });
 export type Invoice = typeof invoices.$inferSelect;
 
-const payments = mysqlTable("payments", {
+export const payments = mysqlTable("payments", {
   id: varchar("id", { length: 255 }).primaryKey(), // Assuming UUID
   invoiceId: varchar("invoice_id", { length: 255 }).notNull().references(() => invoices.id),
   amount: decimal("amount", { precision: 20, scale: 2 }).notNull(),

@@ -1,3 +1,4 @@
+// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
@@ -37,3 +38,4 @@ var vite_config_default = defineConfig({
 export {
   vite_config_default as default
 };
+//# sourceMappingURL=vite.config.js.map

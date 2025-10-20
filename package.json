@@ -4,7 +4,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development PORT=8098 esbuild server/**/*.ts vite.config.ts --outdir=dist-dev --format=esm --platform=node --bundle --tsconfig=tsconfig.json --sourcemap && node dist-dev/index.js",
+    "dev": "cross-env-shell NODE_ENV=development PORT=8098 \"esbuild server/index.ts vite.config.ts --outdir=dist-dev --outbase=. --format=esm --platform=node --bundle --packages=external --alias:@shared=./shared --tsconfig=tsconfig.json --sourcemap && node dist-dev/server/index.js\"",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "check": "tsc",

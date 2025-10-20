@@ -1,8 +1,5 @@
-import {
-  ComplianceStatus,
-  AuditFindingSeverity
-} from "@shared/types";
-class ComplianceTracker {
+// server/compliance-tracker.ts
+var ComplianceTracker = class {
   db;
   requirements;
   constructor(db) {
@@ -191,13 +188,13 @@ class ComplianceTracker {
     let status;
     if (isCompliant) {
       score = 100;
-      status = ComplianceStatus.COMPLIANT;
+      status = "COMPLIANT" /* COMPLIANT */;
     } else if (evidenceFound) {
       score = 50;
-      status = ComplianceStatus.PARTIALLY_COMPLIANT;
+      status = "PARTIALLY_COMPLIANT" /* PARTIALLY_COMPLIANT */;
     } else {
       score = 0;
-      status = ComplianceStatus.NON_COMPLIANT;
+      status = "NON_COMPLIANT" /* NON_COMPLIANT */;
     }
     return {
       requirement_id: requirement.id,
@@ -252,7 +249,7 @@ class ComplianceTracker {
   _identifyComplianceGaps(complianceResults) {
     const gaps = [];
     for (const result of complianceResults) {
-      if (result.status !== ComplianceStatus.COMPLIANT.valueOf()) {
+      if (result.status !== "COMPLIANT" /* COMPLIANT */.valueOf()) {
         gaps.push({
           requirement_id: result.requirement_id,
           category: result.category,
@@ -294,13 +291,13 @@ class ComplianceTracker {
   }
   _calculateFindingImpact(finding) {
     switch (finding.severity) {
-      case AuditFindingSeverity.CRITICAL:
+      case "CRITICAL" /* CRITICAL */:
         return 100;
-      case AuditFindingSeverity.HIGH:
+      case "HIGH" /* HIGH */:
         return 75;
-      case AuditFindingSeverity.MEDIUM:
+      case "MEDIUM" /* MEDIUM */:
         return 50;
-      case AuditFindingSeverity.LOW:
+      case "LOW" /* LOW */:
         return 25;
       default:
         return 0;
@@ -314,12 +311,12 @@ class ComplianceTracker {
     return `${diffDays} days`;
   }
   _requiresEscalation(finding) {
-    return finding.severity === AuditFindingSeverity.CRITICAL || finding.severity === AuditFindingSeverity.HIGH;
+    return finding.severity === "CRITICAL" /* CRITICAL */ || finding.severity === "HIGH" /* HIGH */;
   }
   _getMonitoringRequirements(finding) {
-    if (finding.severity === AuditFindingSeverity.CRITICAL) {
+    if (finding.severity === "CRITICAL" /* CRITICAL */) {
       return ["Daily monitoring", "Weekly report to board"];
-    } else if (finding.severity === AuditFindingSeverity.HIGH) {
+    } else if (finding.severity === "HIGH" /* HIGH */) {
       return ["Weekly monitoring", "Bi-weekly report to management"];
     } else {
       return ["Monthly monitoring"];
@@ -449,7 +446,8 @@ class ComplianceTracker {
       last_updated: (/* @__PURE__ */ new Date()).toISOString()
     };
   }
-}
+};
 export {
   ComplianceTracker
 };
+//# sourceMappingURL=compliance-tracker.js.map
