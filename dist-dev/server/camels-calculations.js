@@ -1,4 +1,5 @@
-class CAMELSCalculations {
+// server/camels-calculations.ts
+var CAMELSCalculations = class {
   db;
   constructor(db) {
     this.db = db;
@@ -456,7 +457,7 @@ class CAMELSCalculations {
       return "E";
     }
   }
-}
+};
 export {
   CAMELSCalculations
 };

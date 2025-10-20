@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db } from "./db.js";
 import {
   type User,
   type UpsertUser,
@@ -90,11 +90,11 @@ export interface IStorage {
   getInvoices(): Promise<Invoice[]>;
   getInvoicesByInstitution(institutionId: number): Promise<Invoice[]>;
   createInvoice(invoice: InsertInvoice): Promise<Invoice>;
-  updateInvoice(id: number, invoice: Partial<Invoice>): Promise<Invoice | undefined>;
+  updateInvoice(id: string, invoice: Partial<Invoice>): Promise<Invoice | undefined>;
 
   // Payments
   getPayments(): Promise<Payment[]>;
-  getPaymentsByInvoice(invoiceId: number): Promise<Payment[]>;
+  getPaymentsByInvoice(invoiceId: string): Promise<Payment[]>;
   createPayment(payment: InsertPayment): Promise<Payment>;
 
   // Penalties
@@ -298,7 +298,7 @@ export class DbStorage implements IStorage {
 
   // Invoices
   async getInvoices(): Promise<Invoice[]> {
-    return await db.select().from(invoices).orderBy(desc(invoices.generatedAt));
+    return await db.select().from(invoices).orderBy(desc(invoices.invoiceDate));
   }
 
   async getInvoicesByInstitution(institutionId: number): Promise<Invoice[]> {
@@ -306,7 +306,7 @@ export class DbStorage implements IStorage {
       .select()
       .from(invoices)
       .where(eq(invoices.institutionId, institutionId))
-      .orderBy(desc(invoices.generatedAt));
+      .orderBy(desc(invoices.invoiceDate));
   }
 
   async createInvoice(invoice: InsertInvoice): Promise<Invoice> {
@@ -314,7 +314,7 @@ export class DbStorage implements IStorage {
     return result[0];
   }
 
-  async updateInvoice(id: number, invoice: Partial<Invoice>): Promise<Invoice | undefined> {
+  async updateInvoice(id: string, invoice: Partial<Invoice>): Promise<Invoice | undefined> {
     const result = await db
       .update(invoices)
       .set({ ...invoice, updatedAt: new Date() })
@@ -325,10 +325,10 @@ export class DbStorage implements IStorage {
 
   // Payments
   async getPayments(): Promise<Payment[]> {
-    return await db.select().from(payments).orderBy(desc(payments.uploadedAt));
+    return await db.select().from(payments).orderBy(desc(payments.paymentDate));
   }
 
-  async getPaymentsByInvoice(invoiceId: number): Promise<Payment[]> {
+  async getPaymentsByInvoice(invoiceId: string): Promise<Payment[]> {
     return await db.select().from(payments).where(eq(payments.invoiceId, invoiceId));
   }
 

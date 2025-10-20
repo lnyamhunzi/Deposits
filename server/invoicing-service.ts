@@ -1,6 +1,6 @@
 import { MySql2Database } from "drizzle-orm/mysql2";
 import * as schema from "@shared/schema";
-import { eq, and, sql, gte, lte } from "drizzle-orm";
+import { eq, and, sql, gte, lte, lt } from "drizzle-orm";
 import { v4 as uuidv4 } from 'uuid';
 import {
   PremiumStatus,

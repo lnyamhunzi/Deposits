@@ -6,7 +6,7 @@ import {
   DepositType,
   AccountSize,
 } from "@shared/types";
-import { DepositAnalysisService } from "./deposit-analysis";
+import { DepositAnalysisService } from "./deposit-analysis.js";
 
 // Interface for the raw deposit data, similar to a pandas DataFrame row
 interface RawDepositData {
